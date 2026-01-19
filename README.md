@@ -1,7 +1,5 @@
-# -Latex-
-小白用AI搓的上科大毕设Latex模板
-
 # 上海科技大学本科毕业论文 LaTeX 模板
+小白用AI搓的上科大毕设Latex模板
 ## 模板文件结构
 ```
 GraduationProjectLatex/
