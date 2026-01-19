@@ -1,0 +1,399 @@
+% LaTeX宏包配置文件 - 上海科技大学本科毕业论文模板
+
+% 忽略警告
+\usepackage{xpatch}
+\ExplSyntaxOn
+    \xpatchcmd\__xeCJK_check_family:n{\__xeCJK_warning:nxx}{\__xeCJK_info:nxx}{}{}
+\ExplSyntaxOff
+
+% 页面布局设置
+\usepackage{geometry}  % 页面边距和布局控制
+\geometry{
+    a4paper,           % A4纸张尺寸
+    left=2.5cm,        % 左边距2.5厘米
+    right=2.5cm,       % 右边距2.5厘米  
+    top=2.5cm,         % 上边距2.5厘米
+    bottom=2.5cm,      % 下边距2.5厘米
+    headheight=1.5cm,  % 增加页眉高度以容纳校徽和黑线
+    headsep=0.8cm,     % 页眉与正文间距
+    footskip=1.2cm     % 页脚基准线偏移
+}
+
+% 页眉页脚和格式控制宏包
+\usepackage{fancyhdr}        % 页眉页脚设置
+\usepackage{lastpage}        % 获取总页数
+\usepackage{titletoc}        % 目录格式控制
+\usepackage{titlesec}        % 标题格式控制
+
+% 字体设置
+\usepackage{fontspec}  % 现代字体管理系统
+\setmainfont{Times New Roman}  % 设置英文主字体为Times New Roman
+% 中文字体设置
+\setCJKmainfont{SimSun}[AutoFakeBold=3]  % 中文主字体：宋体
+\setCJKsansfont{SimHei}[AutoFakeBold=3]  % 中文无衬线字体：黑体
+\setCJKmonofont{KaiTi}[AutoFakeBold=3]   % 中文等宽字体：楷体
+
+% 数学公式支持包
+\usepackage{amsmath}    % 美国数学学会公式扩展
+\usepackage{amssymb}    % 数学符号扩展包
+\usepackage{amsthm}     % 定理环境支持
+
+% 图形处理包
+\usepackage{graphicx}   % 增强的图形支持
+\graphicspath{{1_Frontmatter/}{2_Chapters/}{3_Backmatter/}}  % 设置图片搜索路径
+
+% 表格处理包
+\usepackage{booktabs}   % 出版质量的表格线
+\usepackage{array}      % 增强的表格功能
+\usepackage{longtable}  % 支持跨页长表格
+\usepackage{multirow}   % 支持表格内多行合并
+
+% 颜色支持包
+\usepackage{xcolor}     % 颜色支持
+\definecolor{linkblue}{RGB}{0,0,128}  % 定义链接蓝色
+
+% 浮动体控制
+\usepackage{float}      % 改进的浮动体定位
+\usepackage{placeins}   % 提供浮动屏障控制
+
+% 图表标题格式设置
+\usepackage{caption}    % 自定义图表标题
+\captionsetup{
+    font=small,        % 字体大小
+    labelfont=bf,      % 标签字体加粗
+    textfont=normalfont, % 正文字体正常
+    justification=centering, % 居中对齐
+    labelsep=quad,     % 标签与标题间距
+    skip=5pt          % 标题与图表间距
+}
+
+% 段落和缩进控制
+\usepackage{indentfirst} % 确保段落首行缩进
+\usepackage{setspace}   % 行距设置支持
+
+% 参考文献处理包
+\usepackage[numbers,sort&compress,super]{natbib}  % 添加super选项用于上标
+\bibliographystyle{gbt7714-numerical}       % 中国国家标准参考文献样式
+\setlength{\bibsep}{0.5ex}  % 设置参考文献行间距
+
+% 其他实用工具包
+\usepackage{enumitem}   % 自定义列表环境
+\usepackage{verbatim}   % 代码环境支持
+\usepackage{paralist}   % 紧凑列表环境
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% ========== 页眉页脚和页码格式设置 ==========
+\pagestyle{fancy}  % 启用fancyhdr
+
+% 定义页眉（所有页面都使用相同的页眉）
+\newcommand{\setupheadermy}{%
+    \fancyhf{} % 清除所有页眉页脚
+    % 页眉设置：左边校徽，右边论文题目，下方黑线
+    \fancyhead[L]{
+        \raisebox{0cm}{\includegraphics[height=1cm]{1_Frontmatter/ShanghaiTech_Logo.png}}
+    }
+    \fancyhead[R]{
+        \raisebox{0cm}{\zihao{-5}\heiti 本科毕业论文（设计）}
+    }
+    \renewcommand{\headrulewidth}{0.4pt}
+    \renewcommand{\footrulewidth}{0pt}  % 页脚通常不需要横线
+}
+
+% 样式1：罗马数字页码（用于目录、摘要等前置部分）
+\fancypagestyle{RomanStyle}{
+    \setupheadermy
+    \fancyfoot[C]{
+        \zihao{5}\thepage
+    }
+}
+
+% 样式2：阿拉伯数字页码（用于正文部分）
+\fancypagestyle{ArabicStyle}{
+    \setupheadermy
+    \fancyfoot[C]{
+        \zihao{5}第~\thepage~页~共~\pageref{LastPage}~页
+    }
+}
+
+% 关键：重定义plain样式，使章节首页也有页眉
+\fancypagestyle{plain}{
+    \setupheadermy
+    \fancyfoot[C]{}
+}
+\fancypagestyle{plain}{}  % 先清空
+
+
+
+
+
+
+
+
+
+
+
+% ========== 章节标题格式设置 ==========
+% 使用ctex宏包设置章节格式
+\usepackage[zihao=5]{ctex}
+
+% 设置章节标题格式
+\ctexset{
+    chapter = {
+        name = {第,章},  % 设置章节名称为"第"和"章"
+        number = \chinese{chapter},  % 使用阿拉伯数字编号
+        nameformat = {},  % 清除默认格式
+        format = \centering\zihao{3}\heiti\bfseries,  % 三号黑体居中加粗
+        aftername = \quad,  % 编号和标题之间的间距
+        beforeskip = 30pt,  % 章前间距（上空一行）
+        afterskip = 30pt,  % 章后间距（下空一行）
+        pagestyle = plain,  % 章节首页使用plain样式
+    },
+    section = {
+        format = \zihao{4}\heiti\bfseries,  % 四号黑体
+        indent = 0.75cm,  % 左缩进0.75厘米
+        beforeskip = 3.5ex plus 1ex minus .2ex,
+        afterskip = 2.3ex plus .2ex,
+    },
+    subsection = {
+        format = \zihao{-4}\songti,  % 小四宋体
+        indent = 2em,  % 缩进2字符
+        beforeskip = 3.25ex plus 1ex minus .2ex,
+        afterskip = 1.5ex plus .2ex,
+    },
+    subsubsection = {
+        format = \zihao{-4}\songti,  % 小四宋体
+        indent = 2em,  % 缩进2字符
+        beforeskip = 3.25ex plus 1ex minus .2ex,
+        afterskip = 1.5ex plus .2ex,
+    },
+    paragraph = {
+        format = \zihao{5}\songti,
+        indent = 2em,  % 首行缩进2字符
+    }
+}
+
+% ========== 段落格式设置 ==========
+\setlength{\parindent}{2em}    % 首行缩进2字符
+\setlength{\parskip}{0pt}      % 段落间距为0
+\linespread{1.5}               % 1.5倍行距
+\renewcommand{\baselinestretch}{1.5}  % 确保1.5倍行距生效
+
+% 设置中文和英文字体
+\setCJKmainfont[AutoFakeBold=true]{SimSun}  % 中文主字体为宋体
+\setCJKsansfont[AutoFakeBold=true]{SimHei}  % 中文无衬线字体为黑体
+\setmainfont{Times New Roman}  % 英文主字体
+\setsansfont{Arial}  % 英文无衬线字体
+
+% 设置列表格式
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=(\arabic*), leftmargin=2em}  % 一级列表格式 (1)
+\setlist[enumerate,2]{label=\alph*), leftmargin=3em}    % 二级列表格式 a)
+\setlist[enumerate,3]{label=\roman*), leftmargin=4em}   % 三级列表格式 i)
+\setlist[itemize,1]{label=$\bullet$, leftmargin=2em}    % 一级项目符号
+\setlist[itemize,2]{label=$\circ$, leftmargin=3em}      % 二级项目符号
+\setlist{nosep}  % 去除列表间距
+
+% 设置页边距
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=3cm,
+    right=2.5cm,
+    top=3.5cm,
+    bottom=2.5cm,
+    headheight=1.5cm,
+    headsep=1cm,
+    footskip=1.5cm
+}
+
+% 设置图表标题格式
+\usepackage{caption}
+\DeclareCaptionFont{heiti}{\heiti}
+\captionsetup[figure]{
+    format=hang,
+    font=small,
+    labelsep=space,
+    justification=centering
+}
+\captionsetup[table]{
+    format=hang,
+    font=small,
+    labelsep=space,
+    justification=centering
+}
+
+% 设置引用格式
+\usepackage[numbers,sort&compress]{natbib}
+\setcitestyle{super}  % 上标引用
+\bibliographystyle{gbt7714-numerical}  % 使用国家标准GB/T 7714-2015
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% ========== 目录格式设置 ==========
+% 定义必要的文档结构命令
+\makeatletter
+% 定义 frontmatter
+\providecommand\frontmatter{%
+  \cleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{roman}  % 小写罗马数字
+  \setcounter{page}{1}   % 从 i 开始
+  \pagestyle{plain}     % 简单页码样式
+}
+% 定义 mainmatter
+\providecommand\mainmatter{%
+  \cleardoublepage
+  \@mainmattertrue
+  \pagenumbering{arabic}  % 阿拉伯数字页码
+  \setcounter{page}{1}    % 从 1 开始
+  \pagestyle{plain}      % 简单页码样式
+}
+% 定义 backmatter
+\providecommand\backmatter{%
+  \if@openright
+    \cleardoublepage
+  \else
+    \clearpage
+  \fi
+  \@mainmatterfalse
+}
+\makeatother
+
+% 重新定义目录标题格式
+\makeatletter
+% 保存原始的tableofcontents命令
+\let\oldtableofcontents\tableofcontents
+\renewcommand\tableofcontents{%
+    \clearpage
+    \pagestyle{RomanStyle}  % 添加这一行，确保目录页有页眉
+    \phantomsection
+    \addcontentsline{toc}{chapter}{\contentsname}
+    \chapter*{%
+        \vspace*{1\baselineskip}%
+        \centering
+        \zihao{3}\heiti\bfseries
+        目\quad 录%
+        \vspace*{1\baselineskip}%
+    }%
+    \markboth{目录}{目录}%
+    \@starttoc{toc}%
+}
+\makeatother
+
+% 设置目录格式
+\RequirePackage{titletoc}
+% 章标题格式（一级标题）
+\titlecontents{chapter}
+    [0pt]                                    % 左侧缩进
+    {\addvspace{6pt}\zihao{5}\songti\bfseries} % 前间距和字体
+    {\thecontentslabel\hspace{0.5em}}       % 标签宽度
+    {}                                       % 无编号格式
+    {\titlerule*[0.5em]{.}\contentspage}    % 引导点和页码
+
+% 节标题格式（二级标题）
+\titlecontents{section}
+    [2em]                                    % 左侧缩进
+    {\addvspace{2pt}\zihao{5}\songti}       % 前间距和字体
+    {\thecontentslabel\hspace{0.5em}}       % 标签宽度
+    {}                                       % 无编号格式
+    {\titlerule*[0.5em]{.}\contentspage}    % 引导点和页码
+
+% 小节标题格式（三级标题）
+\titlecontents{subsection}
+    [4.5em]                                  % 左侧缩进
+    {\addvspace{1pt}\zihao{5}\songti}       % 前间距和字体
+    {\thecontentslabel\hspace{0.5em}}       % 标签宽度
+    {}                                       % 无编号格式
+    {\titlerule*[0.5em]{.}\contentspage}    % 引导点和页码
+
+
+
+
+
+
+% ========== 超链接样式设置（必须最后加载） ==========
+\usepackage[]{hyperref}% 创建超链接和书签
+\usepackage{bookmark}                % 增强的书签支持
+
+\hypersetup{
+    colorlinks=true,        % 使用彩色链接
+    linkcolor=black,        % 内部链接黑色
+    citecolor=black,        % 引用链接黑色  
+    filecolor=black,        % 文件链接黑色
+    urlcolor=blue,          % URL链接蓝色
+    bookmarksnumbered=true, % 书签显示编号
+    bookmarksopen=true      % 展开书签
+}
+
+
+% ========== 其他格式设置 ==========
+
+% 表格线粗细设置
+\setlength{\heavyrulewidth}{0.08em}   % 粗线宽度
+\setlength{\lightrulewidth}{0.05em}   % 细线宽度  
+\setlength{\cmidrulewidth}{0.03em}    % 中间线宽度
+
+% 防止孤行和寡行设置
+\clubpenalty=10000    % 防止段首孤行
+\widowpenalty=10000   % 防止段末寡行
+\brokenpenalty=10000  % 防止断字
+
+% 图表标题中文设置
+\renewcommand{\figurename}{图}     % 图标题改为中文"图"
+\renewcommand{\tablename}{表}      % 表标题改为中文"表"
+\renewcommand{\contentsname}{目录}  % 目录标题改为中文"目录"
+\renewcommand{\abstractname}{摘要}  % 摘要标题改为中文"摘要"
+\renewcommand{\bibname}{参考文献}  % 参考文献标题
+
+% 数学环境允许跨页
+\allowdisplaybreaks[4]  % 允许公式跨页显示，优先级为4
+
+% 优化浮动体放置参数
+\renewcommand{\floatpagefraction}{0.8}  % 浮动页中浮动体最小占比
+\renewcommand{\textfraction}{0.1}        % 文本页中文本最小占比
+\renewcommand{\topfraction}{0.9}         % 页顶可放置浮动体的最大比例
+
+% 自定义命令：用于在main.tex中切换页码样式
+\newcommand{\setarabicpagination}{
+    \pagestyle{shanghaitech}
+    \fancyfoot[C]{\zihao{5}第~\thepage~页~共~\pageref{LastPage}~页}
+    \pagenumbering{arabic}
+}
+
+\newcommand{\setromanpagination}{
+    \pagestyle{shanghaitech}
+    \fancyfoot[C]{\zihao{5}\thepage}
+    \pagenumbering{Roman}
+}

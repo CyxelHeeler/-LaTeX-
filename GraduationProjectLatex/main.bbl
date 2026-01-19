@@ -1,0 +1,24 @@
+\begin{thebibliography}{2}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{#1}
+\expandafter\ifx\csname urlstyle\endcsname\relax\else
+  \urlstyle{same}\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \DeclareUrlCommand\doi{\urlstyle{rm}}
+  \def\eprint#1#2{#2}
+\else
+  \def\doi#1{\href{https://doi.org/#1}{\nolinkurl{#1}}}
+  \let\eprint\href
+\fi
+
+\bibitem[陈登原(2000)]{chen2000}
+陈登原.
+\newblock 国史旧闻: 第 1 卷\allowbreak[M].
+\newblock 北京: 中华书局, 2000: 29.
+
+\bibitem[李炳穆(2000)]{li2000}
+李炳穆.
+\newblock 理想的图书馆员和信息专家的素质与形象\allowbreak[J].
+\newblock 图书情报工作, 2000\allowbreak (2): 5-8.
+
+\end{thebibliography}

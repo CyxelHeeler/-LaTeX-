@@ -1,0 +1,89 @@
+%!chapter2.tex
+% 第二章：DME均质充量压燃着火的数值模拟方法
+% 编译说明：此文件需在包含正确设置的ctexrep文档类的主文档main.tex中使用`\include{2_Chapters/chapter2}`调用。
+% 图片文件“气缸压力随曲轴转角变化的曲线.png”应与此tex文件位于同一目录（即2_Chapters文件夹）。
+
+\chapter{DME均质充量压燃着火的数值模拟方法}
+\label{chap:DME_simulation}
+
+\section{数值模型构建基础}
+本文采用化学反应动力学与CFD耦合框架，基于OpenFOAM平台实现多维数值模拟。计算域采用轴向长度120mm、径向直径60mm的圆柱形燃烧室结构，网格划分满足$dy/dx < 0.5$的亚网格精度要求。壁面采用无滑移边界条件，入口速度设置为5m/s对应湍流强度$Tu=2.5\%$。化学反应机理选用San Diego详细甲烷氧化机理，包含54组元与325步基元反应。
+
+\subsection{湍流燃烧建模方法}
+采用涡耗散概念(EDC)模型处理湍流火焰面，结合有限速率/漩涡耗散(FRFM)方法实现化学时间尺度与湍流涡团寿命的动态耦合。着火延迟期通过Arrhenius公式预测：
+\begin{equation}
+    \tau_{ign} = A \exp\left(\frac{E_a}{RT}\right)
+    \label{eq:ignition_delay}
+\end{equation}
+其中指前因子$A=1.2\times10^{13} \, \mathrm{s^{-1}}$，活化能$E_a=58.7 \, \mathrm{kJ/mol}$，气体常数$R=8.314 \, \mathrm{J/(mol\cdot K)}$。
+
+\subsection{二甲醚热力学参数}
+本文中涉及二甲醚的部分热力学参数如下表所示。若表题允许下页接写，接写时表题省略，表头应重复书写，并在右上方写“续表xx”。
+
+% 使用longtable实现跨页续表功能
+\begin{longtable}{cccc}
+    \caption{二甲醚相关热力学参数} \\
+    \toprule
+    组分 & $H_f (\mathrm{kcal/mol})$ & $S_f (\mathrm{kcal/mol})$ & $C_p (\mathrm{kcal/mol})$ \\
+    \midrule
+    \endfirsthead % 定义表格首页表头
+    \multicolumn{4}{r}{续表\thetable} \\
+    \toprule
+    组分 & $H_f (\mathrm{kcal/mol})$ & $S_f (\mathrm{kcal/mol})$ & $C_p (\mathrm{kcal/mol})$ \\
+    \midrule
+    \endhead % 定义每页续表的表头
+    \midrule
+    \multicolumn{4}{r}{接下页\ldots} \\
+    \endfoot
+    \bottomrule
+    \endlastfoot
+    % 表格数据开始
+    A1 & 100 & 100 & 100 \\
+    A2 & 100 & 100 & 100 \\
+    A3 & 100 & 100 & 100 \\
+    A4 & 100 & 100 & 100 \\
+    A5 &  &  &  \\
+    A6 &  &  &  \\
+    A7 &  &  &  \\
+    A8 &  &  &  \\
+\end{longtable}
+
+\subsection{网格无关性验证}
+通过对比3套不同密度的非结构化网格（粗网格：45万单元，中网格：120万单元，细网格：300万单元），发现当量比分布的相对误差在$\Delta\phi<0.015$范围内保持稳定。最终选择中网格方案，在保持计算效率的同时确保湍流涡团结构的准确捕捉。
+
+\subsection{气缸压力随曲轴转角变化曲线}
+每幅插图应有图序和图题，全文插图可以统一编序，也可以逐章单独编序，图序必须连续，不得重复或跳缺。图序和图题写在图的下方居中，五号宋体加黑居中。
+
+下面展示一张气缸压力随曲轴转角变化的曲线图（图\ref{fig:cylinder_pressure}）：
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\linewidth]{气缸压力随曲轴转角变化的曲线.png}
+    \caption{气缸压力随曲轴转角变化的曲线}
+    \label{fig:cylinder_pressure}
+    \smallskip
+    \begin{minipage}{\linewidth}
+        \footnotesize
+        注：黑色实线-实验测量值；红色虚线-EDC模型预测；蓝色点线-FRFM模型预测。
+    \end{minipage}
+\end{figure}
+
+此图展示了试验结果与HCT模拟结果的对比，横坐标为曲轴转角（单位：°CA），纵坐标为气缸压力（单位：MPa）。从图中可以看出，当$\phi=0.4$时最大爆发压力达到4.2MPa，较柴油机典型值降低约18\%。
+
+\subsection{边界层处理策略}
+采用增强壁面函数法(EWF)处理近壁面流动，设置$y^+$值小于5的粘性底层区域。表\ref{tab:boundary_conditions}列出了关键边界参数，其中壁面温度采用绝热边界条件$T_w=600K$，进气温度设定为320K以满足自燃条件。
+
+\begin{table}[htbp]
+    \centering
+    \caption{主要计算边界条件}
+    \label{tab:boundary_conditions}
+    \begin{tabular}{cccc}
+    \toprule
+    参数 & 数值 & 单位 & 备注 \\
+    \midrule
+    气缸直径 & 60 & mm & 直喷式燃烧室 \\
+    压缩比 & 18:1 & - & 高增压设计 \\
+    喷射压力 & 60 & MPa & 共轨喷射系统 \\
+    环境压力 & 95 & kPa & 海拔2000m工况 \\
+    \bottomrule
+    \end{tabular}
+\end{table}

@@ -1,0 +1,67 @@
+% !TEX program = xelatex
+% !TEX encoding = UTF-8 Unicode
+% 主文档 - 上海科技大学本科毕业论文LaTeX模板
+
+% 命令：（ctrl+`)
+% xelatex main.tex
+% bibtex main
+% xelatex main.tex
+% xelatex main.tex
+
+\documentclass[12pt, a4paper]{ctexrep}  % 改为 ctexrep
+
+% 导入宏包配置
+\input{0_Config/packages}  % 加载所有必要的LaTeX宏包
+
+% 定义关键词命令（添加到 packages.tex 或这里）
+\newcommand{\keywords}[1]{\par\vspace{0.5em}\noindent\textbf{关键词：}#1}
+\newcommand{\englishkeywords}[1]{\par\vspace{0.5em}\noindent\textbf{Keywords:}#1}
+
+
+
+\begin{document}
+
+% ========== 封面页 ==========
+\input{1_Frontmatter/cover}
+\newpage
+
+% ========== 中文摘要 ==========
+\pagenumbering{Roman}  % 切换到罗马数字页码
+\pagestyle{RomanStyle}  % 使用罗马数字样式
+\input{1_Frontmatter/abstract}  % 导入中文摘要
+\newpage
+
+% ========== 目录 ==========
+\tableofcontents  % 自动生成目录
+\newpage
+
+% ========== 正文部分 ==========
+\pagenumbering{arabic}  % 切换到阿拉伯数字页码
+\pagestyle{ArabicStyle}  % 使用阿拉伯数字样式
+% 重定义plain样式为阿拉伯数字样式（用于章节首页）
+\fancypagestyle{plain}{
+    \setupheadermy
+    \fancyfoot[C]{
+        \zihao{5}第~\thepage~页~共~\pageref{LastPage}~页
+    }
+}
+
+% 导入各章节
+\input{2_Chapters/chapter1}  % 第一章
+\input{2_Chapters/chapter2}  % 第二章
+\input{2_Chapters/chapter3}  % 第三章
+\input{2_Chapters/chapter4}  % 第四章
+\input{2_Chapters/chapter5}  % 第五章
+\newpage
+
+% ========== 参考文献 ==========
+% 使用natbib方式处理参考文献
+\bibliographystyle{gbt7714-numerical}  % 将这一行移到bibliography之前
+\bibliography{3_Backmatter/references.bib}  % 导入参考文献数据库
+\newpage
+
+
+% ========== 致谢 ==========
+\input{3_Backmatter/acknowledgements}  % 导入致谢
+
+\end{document}

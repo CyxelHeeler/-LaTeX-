@@ -1,0 +1,59 @@
+% 封面页
+\begin{titlepage}
+    \thispagestyle{empty} % 封面不显示页码
+    \noindent % 取消首行缩进
+
+    % 左上角校徽
+    \begin{minipage}[t]{0.2\textwidth}
+        \vspace{0pt}
+        \includegraphics[width=1.9\linewidth]{1_Frontmatter/ShanghaiTech_Logo.png}
+    \end{minipage}
+    \hfill % 将内容推到右侧
+    
+    % 右上角留空以保持平衡
+    \begin{minipage}[t]{0.2\textwidth}
+        \vspace{0pt}
+        % 留空区域
+    \end{minipage}
+    \vspace{2cm} % 校徽与标题之间的垂直间距
+
+    % 大标题居中
+    \begin{center}
+        {\zihao{2}\songti 本科毕业论文（设计）}
+    \end{center}
+    \vspace{3cm} % 标题与信息区域之间的间距
+    
+    % 论文信息区域 - 居中
+    \begin{center}
+        \linespread{1} % 设置行距
+        \zihao{-4}\songti % 小四号宋体
+        
+        \vspace{0.5cm}
+        
+        \begin{minipage}[t]{0.8\textwidth}
+            \noindent
+            \makebox[4.2em][s]{题\hfill 目}：\underline{\makebox[8cm]{}} \\
+
+            \makebox[4.2em][s]{学生姓名}：\underline{\makebox[8cm]{}} \\
+            
+            \makebox[4.2em][s]{学\hfill 号}：\underline{\makebox[8cm]{}} \\
+            
+            \makebox[4.2em][s]{入学年份}：\underline{\makebox[8cm]{}} \\
+            
+            \makebox[4.2em][s]{所在学院}：\underline{\makebox[8cm]{}} \\
+            
+            \makebox[4.2em][s]{攻读专业}：\underline{\makebox[8cm]{}} \\
+            
+            \makebox[4.2em][s]{指导教师}：\underline{\makebox[8cm]{}}
+        \end{minipage}
+    \end{center}
+    
+    % 底部信息
+    \vfill
+    \begin{center}
+        \zihao{-4}\songti
+        上海科技大学 \\[0.5cm]
+        \zihao{-4}\songti
+        年\hspace{2em}月
+    \end{center}
+\end{titlepage}
