@@ -27,7 +27,7 @@ GraduationProjectLatex/
 ```
 
 ## 项目简介
-本项目是基于上海科技大学官方本科毕业论文 Word 模板（下载地址：[学校官网表格模板页面](链接1)）手动制作的 LaTeX 模板。由于我编译现有的上科大毕业论文中文 LaTeX 模板（[GitHub 项目](链接2)）时总是报错，所以我根据学校 Word 模板用ai搓了一个简易版本的毕设论文模板。
+本项目是基于上海科技大学官方本科毕业论文 Word 模板（下载地址：[学校官网表格模板页面](https://oaa.shanghaitech.edu.cn/2019/0321/c4666a41070/page.htm)）手动制作的 LaTeX 模板。由于我编译现有的上科大毕业论文中文 LaTeX 模板（[GitHub 项目](https://github.com/ShanghaitechGeekPie/ctexthesis)）时总是报错，所以我根据学校 Word 模板用ai搓了一个简易版本的毕设论文模板。
 
 模板主要依据文档《3-本科毕业论文（设计）中文模板（摘要、正文、参考文献、致谢等） - 修改版.docx》进行开发，使用 AI 辅助补充了部分内容，主打简单易用（希望如此……）。大部分格式设定集中在 `package.tex` 文件中。
 
